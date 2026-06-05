@@ -69,6 +69,57 @@ export default function EventShieldClient() {
     }
   };
 
+  const crawlHomepage = async () => {
+    if (!form.serviceUrl.trim()) {
+      setError("먼저 서비스 URL을 입력해 주세요.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/crawl", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: form.serviceUrl,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "홈페이지 정보를 가져오지 못했습니다.");
+      }
+
+      setForm((prev) => ({
+        ...prev,
+        serviceName: data.serviceName || prev.serviceName,
+        serviceUrl: data.serviceUrl || prev.serviceUrl,
+        personalDataItems:
+          data.personalDataItems || prev.personalDataItems,
+        hasLogin: data.hasLogin,
+        hasAdminPage: data.hasAdminPage,
+        hasQrTicket: data.hasQrTicket,
+        hasPayment: data.hasPayment,
+        hasFileUpload: data.hasFileUpload,
+        privacyPolicyText:
+          data.privacyPolicyText || prev.privacyPolicyText,
+      }));
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "홈페이지 자동 수집 중 오류가 발생했습니다."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-slate-100 p-8">
       <div className="mx-auto max-w-5xl">
@@ -80,6 +131,7 @@ export default function EventShieldClient() {
             loading={loading}
             onChange={updateForm}
             onAnalyze={analyze}
+            onCrawlHomepage={crawlHomepage}
           />
 
           <ReportResult report={report} error={error} />
