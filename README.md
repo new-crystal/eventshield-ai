@@ -1,3 +1,7 @@
+## Preview
+
+![EventShield AI Preview](./docs/images/eventshield-preview.png)
+
 # EventShield AI
 
 EventShield AI는 학회·행사 홈페이지의 공개 정보를 수집해 개인정보 수집 항목, 주요 기능, 개인정보 처리방침, 기본 기술 점검 항목을 분석하고 AI 보안 리포트를 생성하는 서비스입니다.
