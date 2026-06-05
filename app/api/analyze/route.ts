@@ -99,6 +99,7 @@ export async function POST(req: NextRequest) {
 [서비스 기본 정보]
 서비스명: ${safeInput.serviceName || "입력 없음"}
 서비스 URL: ${safeInput.serviceUrl || "입력 없음"}
+개인정보 처리방침 URL: ${safeInput.privacyPolicyUrl || "탐지 안 됨"}
 
 [수집 개인정보 항목]
 ${safeInput.personalDataItems || "입력 없음"}
@@ -110,14 +111,8 @@ QR 입장권 기능: ${safeInput.hasQrTicket ? "있음" : "없음"}
 결제 기능: ${safeInput.hasPayment ? "있음" : "없음"}
 파일 업로드 기능: ${safeInput.hasFileUpload ? "있음" : "없음"}
 
-[개인정보 수집 동의문]
+[개인정보 처리방침 내용]
 ${safeInput.privacyPolicyText || "입력 없음"}
-
-분석 시 주의:
-- 개인정보 항목에 카드번호, 주민등록번호, 여권번호, 건강정보 등이 없으면 민감정보 수집이라고 단정하지 마.
-- 결제 기능이 있어도 PG사를 통한 결제일 수 있으므로 카드정보 직접 저장이라고 단정하지 마.
-- 개인정보 동의문이 비어 있으면 "동의문 확인 필요"로 판단해.
-- 외부 제공/위탁 문구가 없으면 협력사 공유 리스크를 단정하지 마.
 `.trim(),
         },
       ],

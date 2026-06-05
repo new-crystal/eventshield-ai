@@ -8,6 +8,7 @@ export type EventSecurityInput = {
   hasPayment: boolean;
   hasFileUpload: boolean;
   privacyPolicyText: string;
+  privacyPolicyUrl?: string;
 };
 
 export type RiskItem = {
@@ -33,4 +34,38 @@ export type SecurityReport = {
   summary: string;
   riskItems: RiskItem[];
   priorityActions: string[];
+};
+
+export type PrivacyPolicyChecklist = {
+  hasPurpose: boolean;
+  hasCollectedItems: boolean;
+  hasRetentionPeriod: boolean;
+  hasThirdPartyProvision: boolean;
+  hasConsignment: boolean;
+  hasContact: boolean;
+  hasConsent: boolean;
+};
+
+export type TechnicalChecks = {
+  usesHttps: boolean;
+  formCount: number;
+  inputCount: number;
+  privacyPolicyFound: boolean;
+  privacyPolicyUrl: string;
+};
+
+export type DetectionEvidence = {
+  label: string;
+  evidence: string[];
+};
+
+export type CrawlSummary = {
+  title: string;
+  detectedFields: string[];
+  privacyPolicyChecklist: PrivacyPolicyChecklist;
+  technicalChecks: TechnicalChecks;
+  detectionEvidence: {
+    personalData: DetectionEvidence[];
+    features: DetectionEvidence[];
+  };
 };

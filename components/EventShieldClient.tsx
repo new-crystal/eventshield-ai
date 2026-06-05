@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import type { EventSecurityInput, SecurityReport } from "@/types/report";
+import type {
+  CrawlSummary,
+  EventSecurityInput,
+  SecurityReport,
+} from "@/types/report";
 import HeroSection from "@/components/HeroSection";
 import SecurityInputForm from "@/components/SecurityInputForm";
 import ReportResult from "@/components/ReportResult";
@@ -23,6 +27,7 @@ export default function EventShieldClient() {
   const [report, setReport] = useState<SecurityReport | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [crawlSummary, setCrawlSummary] = useState<CrawlSummary | null>(null);
 
   const updateForm = <K extends keyof EventSecurityInput>(
     key: K,
@@ -96,19 +101,19 @@ export default function EventShieldClient() {
       }
 
       setForm((prev) => ({
-        ...prev,
-        serviceName: data.serviceName || prev.serviceName,
-        serviceUrl: data.serviceUrl || prev.serviceUrl,
-        personalDataItems:
-          data.personalDataItems || prev.personalDataItems,
-        hasLogin: data.hasLogin,
-        hasAdminPage: data.hasAdminPage,
-        hasQrTicket: data.hasQrTicket,
-        hasPayment: data.hasPayment,
-        hasFileUpload: data.hasFileUpload,
-        privacyPolicyText:
-          data.privacyPolicyText || prev.privacyPolicyText,
+         ...prev,
+          serviceName: data.serviceName || prev.serviceName,
+          serviceUrl: data.serviceUrl || prev.serviceUrl,
+          personalDataItems: data.personalDataItems || prev.personalDataItems,
+          hasLogin: Boolean(data.hasLogin),
+          hasAdminPage: Boolean(data.hasAdminPage),
+          hasQrTicket: Boolean(data.hasQrTicket),
+          hasPayment: Boolean(data.hasPayment),
+          hasFileUpload: Boolean(data.hasFileUpload),
+          privacyPolicyUrl: data.privacyPolicyUrl || prev.privacyPolicyUrl,
+          privacyPolicyText: data.privacyPolicyText || prev.privacyPolicyText,
       }));
+      setCrawlSummary(data.crawlSummary || null); 
     } catch (err) {
       setError(
         err instanceof Error
@@ -132,6 +137,7 @@ export default function EventShieldClient() {
             onChange={updateForm}
             onAnalyze={analyze}
             onCrawlHomepage={crawlHomepage}
+            crawlSummary={crawlSummary}
           />
 
           <ReportResult report={report} error={error} />
