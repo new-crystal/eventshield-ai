@@ -1,36 +1,174 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EventShield AI
 
-## Getting Started
+학회·행사 앱/웹사이트의 개인정보·인증·운영 보안 리스크를 AI가 점검하고, 운영자와 개발자가 이해할 수 있는 보안 리포트를 생성하는 서비스입니다.
 
-First, run the development server:
+## 1. 프로젝트 소개
+
+EventShield AI는 학회 사무국, 행사 운영팀, 컨퍼런스 운영 대행사처럼 참가자 개인정보를 다루지만 보안 전문 지식이 부족한 사용자를 위한 AI 보안 점검 어시스턴트입니다.
+
+행사·학회 서비스는 사전등록, 결제, QR 입장, 파일 업로드, 관리자 페이지 등 다양한 기능을 짧은 기간 안에 구축하는 경우가 많습니다. 이 과정에서 개인정보 수집 동의문, 관리자 접근 권한, QR 중복 사용, 파일 업로드 보안 등 중요한 항목이 충분히 점검되지 않을 수 있습니다.
+
+EventShield AI는 사용자가 입력한 서비스 정보를 기반으로 주요 보안 리스크를 분석하고, 운영자용 쉬운 설명과 개발자용 조치사항을 함께 제공합니다.
+
+## 2. 주요 기능
+
+### 서비스 정보 입력
+
+사용자는 아래 정보를 입력할 수 있습니다.
+
+* 행사/학회명
+* 서비스 URL
+* 수집 개인정보 항목
+* 로그인 기능 여부
+* 관리자 페이지 여부
+* QR 입장권 기능 여부
+* 결제 기능 여부
+* 파일 업로드 기능 여부
+* 개인정보 수집 동의문
+
+### AI 보안 리스크 분석
+
+입력된 정보를 바탕으로 AI가 다음 항목을 분석합니다.
+
+* 개인정보 수집 리스크
+* 개인정보 동의문 점검
+* 인증/로그인 리스크
+* 관리자 페이지 접근 리스크
+* QR 입장권 운영 리스크
+* 결제 기능 리스크
+* 파일 업로드 리스크
+* 운영 보안 리스크
+
+### AI 보안 리포트 생성
+
+분석 결과는 다음 형태로 제공됩니다.
+
+* 전체 위험도 점수
+* 요약 설명
+* 항목별 위험도
+* 판단 근거
+* 운영자 안내
+* 개발자 조치사항
+* 우선 조치사항 체크리스트
+
+## 3. 기술 스택
+
+* Frontend: Next.js, React, TypeScript
+* Styling: Tailwind CSS
+* Backend: Next.js API Route
+* AI: OpenAI API
+* Deployment: Vercel 또는 로컬 실행
+
+## 4. 프로젝트 실행 방법
+
+### 1) 패키지 설치
+
+```bash
+npm install
+```
+
+### 2) 환경변수 설정
+
+프로젝트 최상위에 `.env.local` 파일을 생성합니다.
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_MODEL=gpt-4o-mini
+```
+
+OpenAI API 키는 프론트엔드 코드에 직접 넣지 않고, 반드시 서버 환경변수로 관리해야 합니다.
+
+### 3) 개발 서버 실행
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 아래 주소로 접속합니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```txt
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 5. 폴더 구조
 
-## Learn More
+```txt
+eventshield-ai/
+├─ app/
+│  ├─ page.tsx
+│  └─ api/
+│     └─ analyze/
+│        └─ route.ts
+├─ types/
+│  └─ report.ts
+├─ public/
+├─ package.json
+├─ next.config.js
+└─ README.md
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 6. 사용 흐름
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. 사용자가 행사명과 서비스 URL을 입력합니다.
+2. 수집하는 개인정보 항목을 입력합니다.
+3. 로그인, 관리자 페이지, QR 입장권, 결제, 파일 업로드 여부를 선택합니다.
+4. 개인정보 수집 동의문을 입력합니다.
+5. `보안 리스크 분석하기` 버튼을 클릭합니다.
+6. AI가 전체 위험도와 항목별 리스크를 분석합니다.
+7. 운영자용 설명과 개발자용 조치사항이 포함된 리포트를 확인합니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 7. 보안 및 개인정보 보호 방향
 
-## Deploy on Vercel
+EventShield AI는 실제 참가자 명단, 비밀번호, 결제정보, 주민등록번호 등 민감정보 입력을 권장하지 않습니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+서비스는 사용자가 입력한 정보를 기반으로 보안 리스크를 분석하며, 실제 개인정보 원본을 저장하지 않는 방향으로 설계합니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+주요 보호 방안은 다음과 같습니다.
+
+* 실제 참가자 개인정보 입력 방지 안내
+* 이메일, 전화번호, 주민등록번호, 카드번호 형식 마스킹
+* 입력 데이터 최소화
+* 분석 결과 중심 제공
+* 보안 진단 결과가 완전한 보안 인증이 아님을 안내
+
+## 8. AI 분석 시 주의사항
+
+EventShield AI는 사용자가 입력한 정보만을 기준으로 분석합니다.
+
+따라서 입력에 없는 내용을 단정하지 않도록 설계합니다.
+
+예를 들어 결제 기능이 있다고 해서 카드번호를 직접 저장한다고 판단하지 않으며, 외부 협력사 제공 정보가 입력되지 않았다면 데이터 공유를 단정하지 않습니다.
+
+AI 리포트는 사전 점검을 돕는 보조 도구이며, 실제 서비스 오픈 전에는 개발자 또는 보안 전문가의 추가 검토가 필요합니다.
+
+## 9. 현재 구현 범위
+
+현재 버전은 URL을 직접 스캔하거나 취약점을 자동 공격 방식으로 탐지하지 않습니다.
+
+현재 구현 범위는 다음과 같습니다.
+
+* 사용자가 입력한 서비스 구조 분석
+* 개인정보 수집 항목 기반 위험도 판단
+* 기능 여부 기반 운영 보안 리스크 분석
+* AI 리포트 생성
+* 개발자 조치사항 제안
+
+## 10. 향후 개선 방향
+
+향후 다음 기능을 추가할 수 있습니다.
+
+* URL 기반 개인정보 처리방침 자동 추출
+* 관리자 페이지 노출 여부 점검
+* HTTPS 적용 여부 확인
+* 개인정보 수집 폼 자동 분석
+* 리포트 PDF 다운로드
+* 행사별 보안 체크리스트 저장 기능
+* 프로젝트별 보안 리포트 히스토리 관리
+
+## 11. 기대 효과
+
+EventShield AI를 통해 행사 운영자는 보안 전문 지식이 부족해도 주요 위험 요소를 빠르게 파악할 수 있습니다.
+
+개발자는 운영자가 이해한 리스크를 바탕으로 구체적인 수정 요청을 받을 수 있습니다.
+
+결과적으로 학회·행사 서비스의 개인정보 보호 수준과 운영 안정성을 높이는 데 기여할 수 있습니다.
